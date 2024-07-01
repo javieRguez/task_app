@@ -2,14 +2,14 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType({ description: 'task' })
 export class Task {
-    @Field(() => ID)
+    @Field(() => ID, { description: 'The unique ID of the task.' })
     id: string;
-    @Field()
+    @Field({ description: 'The title of the task.' })
     title: string;
-    @Field()
+    @Field({ description: 'The description of the task.' })
     description: string;
-    @Field()
+    @Field({ description: 'The limit date of the task.' })
     limitDate: string;
-    @Field(() => Boolean, { nullable: true })
+    @Field(() => Boolean, { nullable: true, description: 'The status of the task.' })
     finished!: boolean;
 }

@@ -8,30 +8,44 @@ import { TaskPartialUpdateInput } from "./dtos/taskPartialUpdate.input";
 export class TaskResolver {
     constructor(private readonly taskService: TaskService) { }
 
-    @Mutation(() => Boolean)
+    @Mutation(() => Boolean, {
+        description: 'Creates a new task with the provided title, description, limitDate and finished.'
+    })
     async createTaskAsync(
-        @Args('taskData', { type: () => TaskInput }) taskData: TaskInput,
+        @Args('taskData', { type: () => TaskInput, description: 'Is a input type of the task.' }) taskData: TaskInput,
     ): Promise<Boolean> {
         return await this.taskService.createAsync(taskData).then(() => true).catch(() => false);
     }
-    @Query(() => [Task])
+    @Query(() => [Task], {
+        description: 'Gets all tasks.'
+    })
     async getAllTasksAsync(): Promise<Task[]> {
         return this.taskService.getAllAsync();
     }
-    @Query(() => Task)
-    async getTaskByIdAsync(@Args('id', { type: () => String }) id: string): Promise<Task> {
+    @Query(() => Task, {
+        description: 'Gets a task by the provided ID.'
+    })
+    async getTaskByIdAsync(@Args('id', { type: () => String, description: 'The unique identifier of the task.' }) id: string): Promise<Task> {
         return this.taskService.getByIdAsync(id);
     }
-    @Query(() => [Task])
-    async getTasksByStatusAsync(@Args('finished', { type: () => Boolean }) finished: boolean): Promise<Task[]> {
+    @Query(() => [Task], {
+        description: 'Get all tasks that match the status.'
+    })
+    async getTasksByStatusAsync(@Args('finished', { type: () => Boolean, description: 'boolean indicating the status of the task.' }) finished: boolean): Promise<Task[]> {
         return this.taskService.getByStatusAsync(finished);
     }
-    @Mutation(() => Boolean)
-    async updateTaskAsync(@Args('id', { type: () => String }) id: string, @Args('taskData', { type: () => TaskPartialUpdateInput }) taskData: TaskInput): Promise<Boolean> {
+    @Mutation(() => Boolean, {
+        description: 'Updates the provided attributes of the task.'
+    })
+    async updateTaskAsync(
+        @Args('id', { type: () => String, description: 'The unique identifier of the task.' }) id: string,
+        @Args('taskData', { type: () => TaskPartialUpdateInput, description: 'Is a input type of the task.' }) taskData: TaskInput): Promise<Boolean> {
         return this.taskService.updateAsync(id, taskData).then(() => true).catch(() => false);
     }
-    @Mutation(() => Boolean)
-    async removeTaskAsync(@Args('id', { type: () => String }) id: string): Promise<Boolean> {
+    @Mutation(() => Boolean, {
+        description: 'Remove a task by the provided ID.'
+    })
+    async removeTaskAsync(@Args('id', { type: () => String, description: 'The unique identifier of the task.' }) id: string): Promise<Boolean> {
         return this.taskService.removeAsync(id).then(() => true).catch(() => false);
     }
 }

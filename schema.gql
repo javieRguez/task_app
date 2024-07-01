@@ -4,35 +4,88 @@
 
 """task"""
 type Task {
+  """The unique ID of the task."""
   id: ID!
+
+  """The title of the task."""
   title: String!
+
+  """The description of the task."""
   description: String!
+
+  """The limit date of the task."""
   limitDate: String!
+
+  """The status of the task."""
   finished: Boolean
 }
 
 type Query {
+  """Gets all tasks."""
   getAllTasksAsync: [Task!]!
-  getTaskByIdAsync(id: String!): Task!
-  getTasksByStatusAsync(finished: Boolean!): [Task!]!
+
+  """Gets a task by the provided ID."""
+  getTaskByIdAsync(
+    """The unique identifier of the task."""
+    id: String!
+  ): Task!
+
+  """Get all tasks that match the status."""
+  getTasksByStatusAsync(
+    """boolean indicating the status of the task."""
+    finished: Boolean!
+  ): [Task!]!
 }
 
 type Mutation {
-  createTaskAsync(taskData: TaskInput!): Boolean!
-  updateTaskAsync(id: String!, taskData: TaskPartialUpdateInput!): Boolean!
-  removeTaskAsync(id: String!): Boolean!
+  """
+  Creates a new task with the provided title, description, limitDate and finished.
+  """
+  createTaskAsync(
+    """Is a input type of the task."""
+    taskData: TaskInput!
+  ): Boolean!
+
+  """Updates the provided attributes of the task."""
+  updateTaskAsync(
+    """The unique identifier of the task."""
+    id: String!
+
+    """Is a input type of the task."""
+    taskData: TaskPartialUpdateInput!
+  ): Boolean!
+
+  """Remove a task by the provided ID."""
+  removeTaskAsync(
+    """The unique identifier of the task."""
+    id: String!
+  ): Boolean!
 }
 
 input TaskInput {
+  """title of a task is a field of type ( string )."""
   title: String!
+
+  """description of a task is a field of type ( string )."""
   description: String!
+
+  """limitDate of a task is a field of type ( string ) => dd/MM/yyyy."""
   limitDate: String!
+
+  """finished of a task is a field of type ( boolean )."""
   finished: Boolean
 }
 
 input TaskPartialUpdateInput {
+  """title of a task is a field of type ( string )."""
   title: String
+
+  """description of a task is a field of type ( string )."""
   description: String
+
+  """limitDate of a task is a field of type ( string ) => dd/MM/yyyy."""
   limitDate: String
+
+  """finished of a task is a field of type ( boolean )."""
   finished: Boolean
 }
