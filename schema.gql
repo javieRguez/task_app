@@ -1,0 +1,38 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""task"""
+type Task {
+  id: ID!
+  title: String!
+  description: String!
+  limitDate: String!
+  finished: Boolean
+}
+
+type Query {
+  getAllTasksAsync: [Task!]!
+  getTaskByIdAsync(id: String!): Task!
+  getTasksByStatusAsync(finished: Boolean!): [Task!]!
+}
+
+type Mutation {
+  createTaskAsync(taskData: TaskInput!): Boolean!
+  updateTaskAsync(id: String!, taskData: TaskPartialUpdateInput!): Boolean!
+  removeTaskAsync(id: String!): Boolean!
+}
+
+input TaskInput {
+  title: String!
+  description: String!
+  limitDate: String!
+  finished: Boolean
+}
+
+input TaskPartialUpdateInput {
+  title: String
+  description: String
+  limitDate: String
+  finished: Boolean
+}
